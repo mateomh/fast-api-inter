@@ -1,0 +1,45 @@
+x-todo_app: &todo_app
+  build:
+    context: .
+    dockerfile: ./docker/Dockerfile
+  # image: python-todo-app:1.0
+  tmpfs:
+    - /tmp
+  tty: true
+  stdin_open: true
+  volumes:
+    - ./todo_app:/app:cached
+  #   - solids_bundle:/usr/local/bundle
+  environment:
+    - DB_URL=postgres://postgres:password@db:5432
+    - EDITOR=vim
+  working_dir: /app
+
+services:
+  todo_app: 
+    <<: *todo_app
+    command: bash -c "uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
+    ports:
+      - 3929:8000
+    depends_on:
+      - db
+    networks:
+      - local-network
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
+    #     - action: rebuild
+    #       path: ./Gemfile
+  db:
+    image: postgres:14
+    ports:
+      - 3931:5432
+    environment:
+      - POSTGRES_PASSWORD=password
+    networks:
+      - local-network
+networks:
+  local-network:
+    driver: bridge
