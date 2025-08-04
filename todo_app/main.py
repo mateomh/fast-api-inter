@@ -63,3 +63,13 @@ def update_todo(db: db_dependency, req: TodoRequest, todo_id: int=Path(gt=0)):
 
   db.add(todo)
   db.commit()
+
+@app.delete('/todos/{todo_id}', status_code=status.HTTP_204_NO_CONTENT)
+def delete_todo(db: db_dependency, todo_id: int=Path(gt=0)):
+  todo = db.query(Todos).filter(Todos.id == todo_id)
+
+  if todo is None:
+    raise HTTPException(status_code=404, detail='Todo not found')
+  
+  todo.delete()
+  db.commit()
