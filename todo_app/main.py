@@ -24,13 +24,16 @@ class TodoRequest(BaseModel):
   priority: int = Field(gt=0, lt=6)
   complete: bool
 
+
 @app.get('/health-check')
 def root_path():
   return { "status": "ok" }
 
+
 @app.get('/todos', status_code=status.HTTP_200_OK)
 def read_all(db: db_dependency):
   return db.query(Todos).all()
+
 
 @app.get('/todos/{todo_id}', status_code=status.HTTP_200_OK)
 def get_single_todo(db: db_dependency, todo_id: int = Path(gt=0)):
@@ -42,12 +45,14 @@ def get_single_todo(db: db_dependency, todo_id: int = Path(gt=0)):
     
   raise HTTPException(status_code=404, detail='Todo not found')
 
+
 @app.post('/todos', status_code=status.HTTP_201_CREATED)
 def create_todo(db: db_dependency, req: TodoRequest):
   todo = Todos(**req.model_dump())
 
   db.add(todo)
   db.commit()
+
 
 @app.put('/todos/{todo_id}', status_code=status.HTTP_204_NO_CONTENT)
 def update_todo(db: db_dependency, req: TodoRequest, todo_id: int=Path(gt=0)):
@@ -63,6 +68,7 @@ def update_todo(db: db_dependency, req: TodoRequest, todo_id: int=Path(gt=0)):
 
   db.add(todo)
   db.commit()
+
 
 @app.delete('/todos/{todo_id}', status_code=status.HTTP_204_NO_CONTENT)
 def delete_todo(db: db_dependency, todo_id: int=Path(gt=0)):
