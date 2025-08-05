@@ -5,7 +5,9 @@ from typing import Annotated
 from sqlalchemy.orm import Session
 from models import Todos
 
-router = APIRouter()
+router = APIRouter(
+  tags=['Todos']
+)
 
 def get_db():
   db = SessionLocal()
