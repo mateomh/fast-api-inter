@@ -22,7 +22,8 @@ services:
     ports:
       - 3929:8000
     depends_on:
-      - db
+      - pgdb
+      - mysqldb
     networks:
       - local-network
     develop:
@@ -32,14 +33,24 @@ services:
           target: /app
     #     - action: rebuild
     #       path: ./Gemfile
-  db:
-    image: postgres:14
+  pgdb:
+    image: postgres:17
     ports:
       - 3931:5432
     environment:
+      - POSTGRES_USER=root
       - POSTGRES_PASSWORD=password
     networks:
       - local-network
+  mysqldb:
+    image: mysql:8
+    ports:
+      - 3932:3306
+    restart: always
+    environment:
+      MY_SQL_USER: root
+      MY_SQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
 networks:
   local-network:
     driver: bridge
