@@ -49,8 +49,6 @@ services:
       - 3932:3306
     restart: always
     environment:
-      MY_SQL_USER: root
-      MY_SQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: password
     networks:
       - local-network
