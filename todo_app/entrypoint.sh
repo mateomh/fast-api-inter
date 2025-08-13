@@ -2,7 +2,7 @@
 
 set -e
 
-pipenv requirements >> requirements.txt
+pipenv requirements > requirements.txt
 
 pip install -r requirements.txt
 

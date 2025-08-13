@@ -8,7 +8,7 @@ pipenv install "uvicorn[standard]"
 ### Installing dependecies with just pip
 Create the `requirements.tx` from the pipfile
 ```
-pipenv requirements >> requirements.txt
+pipenv requirements > requirements.txt
 ```
 
 
