@@ -5,7 +5,7 @@ from database import SessionLocal
 from jose import JWTError, jwt
 from models import Users
 from passlib.context import CryptContext
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 from typing import Annotated
 
@@ -39,6 +39,7 @@ class CreateUserRequest(BaseModel):
   last_name: str
   password: str
   role: str
+  phone_number: str
 
 
 class Token(BaseModel):
@@ -54,6 +55,7 @@ def create_user(db: db_dependency, req: CreateUserRequest):
     first_name=req.first_name,
     last_name=req.last_name,
     role=req.role,
+    phone_number=req.phone_number,
     hashed_password=bcrypt_context.hash(req.password)
   )
 
