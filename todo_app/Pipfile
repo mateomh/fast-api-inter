@@ -14,8 +14,10 @@ python-jose = {extras = ["cryptography"], version = "*"}
 psycopg2-binary = "*"
 pymysql = "*"
 alembic = "*"
+pytest = "*"
 
 [dev-packages]
+pytest = "*"
 
 [requires]
 python_version = "3.12"
