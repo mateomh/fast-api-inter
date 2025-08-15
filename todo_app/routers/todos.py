@@ -27,9 +27,7 @@ class TodoRequest(BaseModel):
   complete: bool
 
 
-@router.get('/health-check')
-def root_path():
-  return { "status": "ok" }
+
 
 
 @router.get('/todos', status_code=status.HTTP_200_OK)

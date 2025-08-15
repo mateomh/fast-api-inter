@@ -15,6 +15,7 @@ psycopg2-binary = "*"
 pymysql = "*"
 alembic = "*"
 pytest = "*"
+httpx = "*"
 
 [dev-packages]
 pytest = "*"
