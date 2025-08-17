@@ -33,8 +33,8 @@ def override_get_current_user():
   return {"username": "testinguser", "id": 1, "user_role": "admin"}
 
 
-app.dependency_overrides[get_db] = utils.override_get_db
-app.dependency_overrides[get_current_user] = utils.override_get_current_user
+app.dependency_overrides[get_db] = override_get_db
+app.dependency_overrides[get_current_user] = override_get_current_user
 
 client = TestClient(app)
 
